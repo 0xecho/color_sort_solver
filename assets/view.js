@@ -55,6 +55,42 @@ class State {
 
     }
 
+    addRandomFlasks(){
+        
+        let howMany = prompt("How many random flasks [2-4] do you want?")
+        if(isNaN(howMany)){
+            return;
+        }        
+        Object.keys(this.FLASKS_DATA).forEach((elem) => {
+            this.removeFlask(elem)
+        })
+        howMany = Math.min(howMany, 4)
+        howMany = Math.max(howMany, 2)
+        console.log("HOWMANY", howMany);
+        let colors = ["red", "blue", "green", "yellow", "pink", "purple", "black"]
+        colors = colors.slice(0, howMany)
+        let allColors = [];
+        colors.forEach(color=>{
+            for(let i=0;i<4;i++)allColors.push(color)
+        })
+        
+        for (let i = allColors.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = allColors[i];
+            allColors[i] = allColors[j];
+            allColors[j] = temp;
+        }
+        console.log(allColors);
+        while (allColors.length) {
+            let flask = this.addFlask(4)
+            flask.data = allColors.slice(0, 4);
+            allColors = allColors.slice(4, allColors.length);
+            flask.render_html()
+        }
+        this.addFlask(4)
+        this.addFlask(4)
+    }
+
     setHead(text){
         document.getElementById("solution").innerText = text
     }
@@ -106,7 +142,8 @@ class Flask {
             main_div = document.createElement("div");
             main_div.id = `flask_${this.FLASK_ID}`;
             main_div.style.display = "inline-block";
-            main_div.style.marginLeft = "100px"
+            main_div.style.paddingLeft = "100px"
+            
             app.appendChild(main_div)
         }
         else {
