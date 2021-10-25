@@ -7,200 +7,54 @@
 </head>
 <body>
 
+    <div id="solution">
+        .
+    </div>
     <div id="app">
-
-        <div id="flask1">
-            <div class="square" onclick="document.getElementById('square_1_1_input').click()" id="square_1_1">
-                <input type="color" name="square_1_1_input" id="square_1_1_input" value="blue" hidden onchange="color_changed(event, this)">
-            </div>
-            <div class="square" style="background-color:red"></div>
-            <div class="square" style="background-color:blue"></div>
-            <div class="square" style="background-color:yellow"></div>
-            <div class="bottom-base">
-                <div class="square bottom" style="background-color:blue"></div>
-                <div class="border bottom" style="background-color:blue"></div>
-            </div>
-        </div>
-
-
     </div>
 
-    <script>
-
-        let squares = document.getElementsByClassName("square");
-        
-        for(let i=0; i<squares.length; i++){
-            let square = squares[i];
-            square.style.backgroundColor = random_color()
-        }
-        
-        let bottom = document.getElementsByClassName("bottom-base");
-        let bottom_children = bottom[0].children;
-
-        bottom_color = random_color()
-        for(let i=0; i<bottom_children.length; i++){
-            let child = bottom_children[i];
-            child.style.backgroundColor = bottom_color;
-        }
-
-        
-        function random_color(){
-            let colors = ["red", "blue", "green", "yellow", "gray", "black", "violet", "purple", "orange"];
-            color = colors[Math.floor(Math.random()*colors.length)];
-            return color
-        }
-
-        function color_changed(event, t) {
-            target_input_name = event.target.id;
-            target_name = target_input_name.substr(0, target_input_name.length-6);
-            color = t.value;
-            document.getElementById(target_name).style.backgroundColor = color;
-        }
-
-        FLASK_ID = 0;
-        
-        class Flask {
-            
-            constructor(){
-                this.height = 5;
-                this.data = [];
-                this.FLASK_ID = FLASK_ID;
-                FLASK_ID += 1;
-                for(let i=0;i<this.height;i++){
-                    this.data.push(random_color());
-                }
-            }
-
-            render_html(){
-                let app = document.getElementById("app");
-
-                let main_div = document.getElementById(`flask_${this.FLASK_ID}`);
-                // If flask_div not found, create it
-                if(!main_div){
-                    main_div = document.createElement("div");
-                    main_div.id = `flask_${this.FLASK_ID}`;
-                    main_div.style.display = "inline-block";
-                    main_div.style.marginLeft = "100px"
-                    app.appendChild(main_div)
-                }
-                else{
-                    main_div.textContent = "";
-                }
-
-                for(let i=0; i<this.height;i++){
-                    if(i==this.height-1){
-                        let bottom_base = document.createElement("div");
-                        bottom_base.id = `bottom_base_${this.FLASK_ID}_${i}`;
-                        let square_bottom = document.createElement("div");
-                        square_bottom.classList.add("square");
-                        square_bottom.classList.add("bottom");
-                        square_bottom.style.backgroundColor = this.data[i];
-                        let border_bottom = document.createElement("div");
-                        border_bottom.classList.add("border");
-                        border_bottom.classList.add("bottom");
-                        border_bottom.style.backgroundColor = this.data[i];
-
-                        let color_input = document.createElement("input");
-                        color_input.type = "color";
-                        color_input.id = `bottom_base_${this.FLASK_ID}_${i}_input`;
-                        color_input.setAttribute("data-flask_id", this.FLASK_ID);
-                        color_input.setAttribute("data-bottom_base_id", i);
-                        color_input.hidden = true;
-                        color_input.value = this.data[i];
-                        color_input.onchange = (event) => {
-                            console.log(this)
-                            let target = event.target;
-                            let color = target.value;
-                            let flask_id = target.getAttribute("data-flask_id");
-                            let bottom_base_id = target.getAttribute("data-bottom_base_id");
-                            let bottom_base_children = document.getElementById(`bottom_base_${flask_id}_${bottom_base_id}`).children;
-                            console.log(bottom_base_children)
-                            let flask = FLASKS[flask_id];
-                            for(let c=0; c<bottom_base_children.length; c++){
-                                let bottom_child = bottom_base_children[c];
-                                bottom_child.style.backgroundColor = color;
-                            }
-                            flask.data[i] = color;
-                            this.render_html();
-                        }
-
-                        border_bottom.onclick = () => {
-                            document.getElementById(color_input.id).click()
-                        };
-                        square_bottom.onclick = () => {
-                            document.getElementById(color_input.id).click()
-                        };
-                        main_div.appendChild(bottom_base)
-                        bottom_base.appendChild(square_bottom)
-                        bottom_base.appendChild(border_bottom)
-                        square_bottom.appendChild(color_input)
-
-                    }else{
-                        let square = document.createElement("div");
-                        square.id = `square_${this.FLASK_ID}_${i}`;
-                        square.classList.add("square");
-                        square.style.backgroundColor = this.data[i];
-                        let color_input = document.createElement("input");
-                        color_input.type = "color";
-                        color_input.id = `square_${this.FLASK_ID}_${i}_input`;
-                        color_input.setAttribute("data-flask_id", this.FLASK_ID);
-                        color_input.setAttribute("data-square_id", i);
-                        color_input.hidden = true;
-                        color_input.value = this.data[i];
-                        color_input.onchange = (event)=>{
-                            console.log(this)
-                            let target = event.target;
-                            let color = target.value;
-                            let flask_id = target.getAttribute("data-flask_id");
-                            let square_id = target.getAttribute("data-square_id");
-                            let flask = FLASKS[flask_id];
-                            let square = document.getElementById(`square_${flask_id}_${square_id}`); 
-                            flask.data[i] = color;
-                            square.style.backgroundColor = color;
-                            this.render_html();
-                        }
-                        square.onclick = ()=>{
-                            document.getElementById(color_input.id).click()
-                        };
-                        main_div.appendChild(square)
-                        square.appendChild(color_input)
-                    }
-                }
-            }
-        }
-       
-        let FLASKS = {};
-
-        for(let i=0;i < 10; i++){
-            f1 = new Flask()
-            f1.render_html()
-            FLASKS[f1.FLASK_ID] = f1;
-        }
-
-    </script>
-
     <script src="/assets/view.js"></script>
+    <script>
+        let main_state = new State();
+        main_state.addFlask(4);
+        </script>
     <script src="/assets/solve.js"></script>
-
+    
+    <button style="margin-left: 49.3%;" onclick="main_state.addFlaskFromPrompt()">
+        Add Flask
+    </button>
+    <br><br>
+    <button style="margin-left: 50%;" onclick="main_state.solve()">
+        Solve
+    </button>
+    
     <style>
+        body {
+            background-color: beige;
+        }
+        
+        #solution {
+            margin-top: 100px;
+            text-align: center;
+        }
         #app {
-            margin-top: 200px;
+            margin-top: 100px;
             margin-left: 200px;
         }
-
+        
         #flask1 {
             display: inline-block;
         }
-
+        
         .square {
             height: 50px;
             width: 50px;
         }
-
+        
         .square:hover {
             background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
         }
-
+        
         .bottom-base {
             position: relative;
         }
@@ -212,9 +66,15 @@
             width: 50px;
             border-radius: 30px;
         }
+        
         .border:hover{
             /* TODO: Properly Allow color selection */
             background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
+        }
+
+        .rounded {
+            border-bottom-left-radius: 500px;
+            border-bottom-right-radius: 500px;
         }
     </style>
     
