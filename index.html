@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="assets/retro.css">
     <title>Color Sort Solver</title>
 </head>
+
 <body>
 
-    <body>
-    
-        <header>
-            <!--navbar controller icon-->
-            <a href="#"> <img class="logo" src="http://cdn.onlinewebfonts.com/svg/img_492659.png" alt="logo"></a>
-            
-            <nav>
-                <ul>
-                    <!--navbar buttons-->
-                    <li class="button-one"><a href="about.html">About</a></li>
-                    <li class="button-two"><a href="todo.html">TODO</a></li>
-                </ul>
-            </nav>
-    
-        </header>
-    </body>
+    <header>
+        <!--navbar controller icon-->
+        <a href="#"> <img class="logo" src="http://cdn.onlinewebfonts.com/svg/img_492659.png" alt="logo"></a>
+
+        <nav>
+            <ul>
+                <!--navbar buttons-->
+                <li class="button-one"><a href="index.html">Home</a></li>
+                <li class="button-two"><a href="todo.html">TODO</a></li>
+                <li class="button-three"><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
     <div id="solution">
         <div id="solution_text">
             .
@@ -45,7 +46,7 @@
         let main_state = new State();
     </script>
     <script src="assets/solve.js"></script>
-    
+
     <div style="margin-top: 10px; text-align: center;">
 
         <button onclick="main_state.addFlaskFromPrompt()">
@@ -53,54 +54,57 @@
         </button>
         <br><br>
         <button onclick="main_state.addRandomFlasks()">
-            Random Flasks 
+            Random Flasks
         </button>
         <br><br>
-        <button  onclick="main_state.solve()">
+        <button onclick="main_state.solve()">
             Solve
         </button>
     </div>
-        
+
     <style>
         body {
             background-color: beige;
         }
-        
+
         #solution {
             margin-top: 50px;
             text-align: center;
         }
+
         #app {
             margin-top: 50px;
         }
-        
+
         #flask1 {
             display: inline-block;
         }
-        
+
         .square {
             height: 50px;
             width: 50px;
         }
-        
+
         .square:hover {
             background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
         }
-        
+
         .bottom-base {
             position: relative;
         }
+
         .bottom {
             position: absolute;
         }
+
         .border {
             height: 70px;
             width: 50px;
             border-radius: 30px;
             animation: spin 6s ease-in-out infinite
         }
-        
-        .border:hover{
+
+        .border:hover {
             /* TODO: Properly Allow color selection */
             background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
         }
@@ -120,6 +124,7 @@
             }
         }
     </style>
-    
+
 </body>
+
 </html>
