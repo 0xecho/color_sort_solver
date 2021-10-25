@@ -1,7 +1,7 @@
 function _solve() {
     let count = 0;
 
-    let max_depth = 30;
+    let max_depth = 10;
 
     let initial_state = main_state.asArray();
     FLASK_ID = initial_state.length;
@@ -11,6 +11,7 @@ function _solve() {
     ];
     console.log(JSON.stringify(initial_state))
 
+    let biggestDEPTH = 0;
 
     while (possibles.length) {
         let [moves, current_state, depth] = possibles.shift();
@@ -20,6 +21,10 @@ function _solve() {
         }
         if (depth > max_depth) {
             continue;
+        }
+        if(depth > biggestDEPTH){
+            biggestDEPTH = depth;
+            console.log(biggestDEPTH);
         }
 
         for (let fidx = 0; fidx < current_state.length; fidx++) {

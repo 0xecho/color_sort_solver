@@ -3,43 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="assets/retro.css">
     <title>Color Sort Solver</title>
 </head>
 <body>
 
+    <body>
+    
+        <header>
+            <!--navbar controller icon-->
+            <a href="#"> <img class="logo" src="http://cdn.onlinewebfonts.com/svg/img_492659.png" alt="logo"></a>
+            
+            <nav>
+                <ul>
+                    <!--navbar buttons-->
+                    <li class="button-one"><a href="about.html">About</a></li>
+                    <li class="button-two"><a href="todo.html">TODO</a></li>
+                </ul>
+            </nav>
+    
+        </header>
+    </body>
     <div id="solution">
         .
     </div>
-    <div id="app">
+    <div id="app" style="text-align: center;">
+        <div id="flask_0" style="display: inline-block;">
+            Start by adding a new flask
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
     </div>
 
     <script src="assets/view.js"></script>
     <script>
         let main_state = new State();
-        main_state.addFlask(4);
-        </script>
+    </script>
     <script src="assets/solve.js"></script>
     
-    <button style="margin-left: 49.3%;" onclick="main_state.addFlaskFromPrompt()">
-        Add Flask
-    </button>
-    <br><br>
-    <button style="margin-left: 50%;" onclick="main_state.solve()">
-        Solve
-    </button>
-    
+    <div style="text-align: center;">
+
+        <button onclick="main_state.addFlaskFromPrompt()">
+            Add Flask
+        </button>
+        <br><br>
+        <button onclick="main_state.addRandomFlasks()">
+            Random Flasks 
+        </button>
+        <br><br>
+        <button  onclick="main_state.solve()">
+            Solve
+        </button>
+    </div>
+        
     <style>
         body {
             background-color: beige;
         }
         
         #solution {
-            margin-top: 100px;
+            margin-top: 50px;
             text-align: center;
         }
         #app {
-            margin-top: 100px;
-            margin-left: 200px;
+            margin-top: 50px;
         }
         
         #flask1 {

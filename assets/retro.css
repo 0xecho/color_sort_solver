@@ -1,0 +1,139 @@
+/* 
+	Stolen from: https://codepen.io/pin0s/pen/ZEWvzRV
+	All credits for the nav bar goes up there
+ */
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+/*header styling*/
+header {
+    background-color: #D3D3D9; 
+    display: flex; 
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 5px;
+  }
+
+    /*icon sizing*/
+ header img {
+   width:52px; 
+   height:52px; 
+  }
+
+/*nav button styling*/
+nav ul { 
+  list-style: none; 
+    }
+
+ nav ul li {
+        display: inline-block;
+        text-transform: uppercase;
+        font-size: 1.5vh;
+    }
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/*about button*/
+.button-one {
+  background-color: #3BB273;
+  padding: 10px 2px;
+  border-radius: 10%;
+  box-shadow: -3px 3px 3px #339963;
+  }
+
+/*projects button*/
+.button-two {
+  background-color: #4D9DE0;
+  padding: 10px 2px;
+  border-radius: 10%;
+  box-shadow: -3px 3px 3px #2F8DDA;
+  }
+
+/*blog button*/
+.button-three {
+  background-color: #E15554;
+  padding: 10px 2px;
+  border-radius: 10%;
+  box-shadow: -3px 3px 3px #DA2F2F;
+  }
+
+/*contact button*/
+.button-four {
+  background-color: #E1BC29;
+  padding: 10px 2px;
+  border-radius: 10%;
+  box-shadow: -3px 3px 3px #C4A31C;
+  }
+
+/*button click hover effect*/
+nav ul li:hover {
+  transform: scale(.9, .9);
+}
+
+/*animation for icon*/
+.logo:hover {
+    animation: rumble 0.6s linear;
+}
+
+@keyframes rumble {
+    20% {transform: rotate(10deg);}
+    40% {transform: rotate(-10deg);}
+    60% {transform: rotate(10deg);}
+    80% {transform: rotate(-10deg);}
+}
+
+#snes-box {
+  text-align: center;
+  margin-right: 100px;
+}
+
+  #snes {
+    width: 70%;
+    height: 70%;
+    margin: 0px auto;
+  }
+
+@media only screen and (min-width: 768px) {
+
+    header {
+        justify-content: space-between;
+  }
+ 
+  header img {
+    padding-left: 10px;
+    width: 56px;
+    height:66px;
+    }
+
+nav ul li {
+  padding: 10px 15px;
+  margin-right: 20px;
+  font-size: 1em;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+
+header {
+  justify-content: space-between;
+  }
+
+header img {
+  padding-left: 20px;
+  width: 72px;
+  height: 82px;
+  }
+    
+nav li {
+  padding: 10px 15px;
+  margin-right: 20px;
+  font-size: 1.2em;
+  }
+}
