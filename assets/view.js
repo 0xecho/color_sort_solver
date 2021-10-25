@@ -140,12 +140,12 @@ class State {
             let solution = _solve()
     
             if (solution == null) {
-                this.setHead("INVALID OR UNSOLVABLE IN 10 MOVES")
                 this.resetSolution()
+                this.setHead("INVALID OR UNSOLVABLE IN 10 MOVES")
             }
             else if (solution.length== 0) { 
-                this.setHead("ALREADY IN SOLVED STATE")
                 this.resetSolution()
+                this.setHead("ALREADY IN SOLVED STATE")
             }else {
                 let opt = "";
                 solution.forEach(elem=>{
