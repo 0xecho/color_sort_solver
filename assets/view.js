@@ -96,20 +96,24 @@ class State {
     }
 
     solve(){
-        let solution = _solve()
-
-        if (solution == null) {
-            this.setHead("INVALID OR UNSOLVABLE STATE")
-        }
-        else if (solution.length== 0) { 
-            this.setHead("ALREADY IN SOLVED STATE")
-        }else {
-            let opt = "";
-            solution.forEach(elem=>{
-                opt += `Flask {${elem[0]}} to Flask {${elem[1]}}, `
-            })
-            this.setHead(opt)
-        }
+        this.setHead("Started solving ... please wait")
+        
+        setTimeout(() => {
+            let solution = _solve()
+    
+            if (solution == null) {
+                this.setHead("INVALID OR UNSOLVABLE IN 10 MOVES")
+            }
+            else if (solution.length== 0) { 
+                this.setHead("ALREADY IN SOLVED STATE")
+            }else {
+                let opt = "";
+                solution.forEach(elem=>{
+                    opt += `Flask {${elem[0]}} to Flask {${elem[1]}}, `
+                })
+                this.setHead(opt)
+            }
+        }, 2000);
 
     }
 
@@ -131,6 +135,7 @@ class Flask {
     remove () {
         let main_div = document.getElementById(`flask_${this.FLASK_ID}`);
         main_div.textContent = "";
+        main_div.outerHTML = "";
     }
 
     render_html() {

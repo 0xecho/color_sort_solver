@@ -1,7 +1,7 @@
 function _solve() {
     let count = 0;
 
-    let max_depth = 10;
+    let max_depth = 9;
 
     let initial_state = main_state.asArray();
     FLASK_ID = initial_state.length;
@@ -14,7 +14,7 @@ function _solve() {
     let biggestDEPTH = 0;
 
     while (possibles.length) {
-        let [moves, current_state, depth] = possibles.shift();
+        let [moves, current_state, depth] = possibles.pop();
         if (is_solved(current_state)) {
             console.log("SOLVED WITH", JSON.stringify(moves));
             return moves
