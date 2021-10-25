@@ -3,12 +3,15 @@ class State {
     FLASKS_DATA = {
 
     }
+    solution = []
+    solution_idx = 0
 
     addFlask(height){
         let newFlask = new Flask(this.FLASK_ID, height, this);
         newFlask.render_html();
         this.FLASKS_DATA[this.FLASK_ID] = newFlask;
         this.FLASK_ID += 1;
+        this.resetSolution()
         return newFlask
     }
 
@@ -26,6 +29,7 @@ class State {
             flask.remove()
             delete this.FLASKS_DATA[flaskID];
         }
+        this.resetSolution()
     }
 
     asArray(){
@@ -92,7 +96,41 @@ class State {
     }
 
     setHead(text){
-        document.getElementById("solution").innerText = text
+        document.getElementById("solution_text").innerText = text
+    }
+
+    appendSolutionButtons(){
+        let solutionDiv = document.getElementById("solution");
+        let nextBtn = document.createElement("button")
+        nextBtn.onclick = ()=>{
+            if (this.solution.length && this.solution_idx<this.solution.length) {
+                let [src_flask_id, dst_flask_id] = this.solution[this.solution_idx];
+                this.solution_idx += 1;
+                let src_flask = this.FLASKS_DATA[src_flask_id]
+                let dst_flask = this.FLASKS_DATA[dst_flask_id]
+                let top_color = src_flask.get_top();
+                let top_color_count = src_flask.get_top_count();
+                src_flask.removeColor(top_color_count)
+                dst_flask.addColor(top_color_count, top_color)
+            }
+        }
+        nextBtn.innerText = "Next Move"
+        solutionDiv.appendChild(nextBtn)
+        let prevBtn = document.createElement("button")
+        prevBtn.innerText = "Previous Move"
+        prevBtn.onclick = () => {
+            if (this.solution.length && this.solution_idx >= 0) {
+                this.solution_idx -= 1;
+                let [dst_flask_id, src_flask_id] = this.solution[this.solution_idx];
+                let src_flask = this.FLASKS_DATA[src_flask_id]
+                let dst_flask = this.FLASKS_DATA[dst_flask_id]
+                let top_color = src_flask.get_top();
+                let top_color_count = src_flask.get_top_count();
+                src_flask.removeColor(top_color_count)
+                dst_flask.addColor(top_color_count, top_color)
+            }
+        }
+        solutionDiv.appendChild(prevBtn)
     }
 
     solve(){
@@ -103,18 +141,28 @@ class State {
     
             if (solution == null) {
                 this.setHead("INVALID OR UNSOLVABLE IN 10 MOVES")
+                this.resetSolution()
             }
             else if (solution.length== 0) { 
                 this.setHead("ALREADY IN SOLVED STATE")
+                this.resetSolution()
             }else {
                 let opt = "";
                 solution.forEach(elem=>{
                     opt += `Flask {${elem[0]}} to Flask {${elem[1]}}, `
                 })
                 this.setHead(opt)
+                this.appendSolutionButtons()
+                this.solution = solution;
             }
         }, 2000);
 
+    }
+
+    resetSolution(){
+        this.solution = []
+        this.solution_idx = 0
+        document.getElementById("solution_text").innerText = ""
     }
 
 }
@@ -216,7 +264,7 @@ class Flask {
     }
 
     remaining_size() {
-        if (this.is_valid()) {
+        // if (this.is_valid()) {
             let count = 0;
             for (let i = this.height - 1; i >= 0; i--) {
                 let item = this.data[i];
@@ -225,7 +273,7 @@ class Flask {
                 }
             }
             return count;
-        }
+        // }
         return 0;
     }
 
@@ -238,6 +286,22 @@ class Flask {
         return null;
     }
 
+    get_top_count(){
+        let top_color = this.get_top();
+        let count = 0;
+        for (let idx = 0; idx < this.height; idx++) {
+            if (this.data[idx] == top_color) {
+                count += 1
+            }else if (this.data[idx]=="#ffffff"){
+                continue
+            }
+            else {
+                break
+            }
+        }
+        return count;
+    }
+
     fill(color, size) {
         let remaining = this.remaining_size();
         if (size > remaining) {
@@ -246,13 +310,30 @@ class Flask {
         let top = this.get_top();
         // console.log("top", top);
         if (top == null || top == color) {
-
+            
             let start_idx = remaining - size;
             for (let idx = start_idx; idx < remaining; idx++) {
                 this.data[idx] = color;
             }
             this.render_html()
         }
+    }
+    
+    addColor(size, color) {
+        let remaining = this.remaining_size();
+        let start_idx = remaining - size;
+        for (let idx = start_idx; idx < remaining; idx++) {
+            this.data[idx] = color;
+        }
+        this.render_html()
+    }
+
+    removeColor(size) {
+        let start_idx = this.remaining_size();
+        for (let idx = 0; idx < size ; idx++) {
+            this.data[start_idx + idx] = "#ffffff";
+        }
+        this.render_html()
     }
 
     clone() {

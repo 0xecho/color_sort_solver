@@ -14,7 +14,12 @@ function _solve() {
     let biggestDEPTH = 0;
 
     while (possibles.length) {
-        let [moves, current_state, depth] = possibles.pop();
+        if(biggestDEPTH>6){
+            var [moves, current_state, depth] = possibles.pop();
+        }
+        else{
+            var [moves, current_state, depth] = possibles.shift();
+        }
         if (is_solved(current_state)) {
             console.log("SOLVED WITH", JSON.stringify(moves));
             return moves
@@ -45,6 +50,7 @@ function _solve() {
                     }
                 }
             }
+            if(top_color==null)continue;
             for (let ofidx = 0; ofidx < current_state.length; ofidx++) {
                 if (ofidx == fidx) continue;
                 let [target_flask_id, target_data] = current_state[ofidx];
@@ -66,7 +72,7 @@ function _solve() {
                     // console.log(new_move);
                     for (let i = 0; i < FLASK_ID; i++) { //loop 
                         if (i == ofidx) {
-                            let current_flask_state = [i];
+                            let current_flask_state = [i+""];
                             // console.log("FILLED", target_data, top_color, top_count, remaining)
                             current_flask_state.push(fill(target_data.slice(), top_color, top_count, remaining));
                             // console.log("AFTER", current_flask_state);
@@ -74,7 +80,7 @@ function _solve() {
                                 current_flask_state
                             );
                         } else if (i == fidx) {
-                            let current_flask_state = [i];
+                            let current_flask_state = [i+""];
                             // console.log("UNFILLED", data, top_count)
                             current_flask_state.push(unfill(data.slice(), top_count));
                             // console.log("AFTER", current_flask_state);
@@ -83,7 +89,7 @@ function _solve() {
                             );
                         } else {
                             new_state.push(
-                                [i, current_state[i][1].slice()]
+                                [i+"", current_state[i][1].slice()]
                             );
                         }
                     }

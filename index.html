@@ -25,11 +25,14 @@
         </header>
     </body>
     <div id="solution">
-        .
+        <div id="solution_text">
+            .
+        </div>
     </div>
     <div id="app" style="text-align: center;">
         <div id="flask_0" style="display: inline-block;">
             Start by adding a new flask
+            <br>
             <br>
             <br>
             <br>
@@ -43,7 +46,7 @@
     </script>
     <script src="assets/solve.js"></script>
     
-    <div style="text-align: center;">
+    <div style="margin-top: 10px; text-align: center;">
 
         <button onclick="main_state.addFlaskFromPrompt()">
             Add Flask
@@ -94,6 +97,7 @@
             height: 70px;
             width: 50px;
             border-radius: 30px;
+            animation: spin 6s ease-in-out infinite
         }
         
         .border:hover{
@@ -104,6 +108,16 @@
         .rounded {
             border-bottom-left-radius: 500px;
             border-bottom-right-radius: 500px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translateY(0) rotate(0deg)
+            }
+
+            100% {
+                transform: translateY(-100%) rotate(400deg)
+            }
         }
     </style>
     
