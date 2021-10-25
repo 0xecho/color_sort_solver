@@ -162,7 +162,6 @@ class State {
     resetSolution(){
         this.solution = []
         this.solution_idx = 0
-        document.getElementById("solution_text").innerText = ""
     }
 
 }
